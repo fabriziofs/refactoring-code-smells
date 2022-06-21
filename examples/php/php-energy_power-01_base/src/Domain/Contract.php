@@ -6,6 +6,17 @@ namespace CodelyTv\Domain;
 
 final class Contract
 {
+    public const NORMALIZED_POWERS = [
+        1150,
+        1725,
+        2300,
+        3450,
+        4600,
+        5750,
+        6900,
+        8050,
+        9200
+    ];
     private string $id;
     private int    $contractedPower;
 
@@ -19,19 +30,7 @@ final class Contract
 
     private function ensurePowerIsNormalized(int $newPower): void
     {
-        $validNormalizedPowers = [
-            1150,
-            1725,
-            2300,
-            3450,
-            4600,
-            5750,
-            6900,
-            8050,
-            9200
-        ];
-
-        if (!in_array($newPower, $validNormalizedPowers)) {
+        if (!in_array($newPower, self::NORMALIZED_POWERS)) {
             throw new InvalidPower($newPower);
         }
     }
