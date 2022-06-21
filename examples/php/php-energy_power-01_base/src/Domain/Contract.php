@@ -7,12 +7,31 @@ namespace CodelyTv\Domain;
 final class Contract
 {
     private string $id;
-    private int $contractedPower;
+    private int    $contractedPower;
 
     public function __construct(string $id, int $contractedPower)
     {
-        $this->id = $id;
+        $this->id              = $id;
         $this->contractedPower = $contractedPower;
+    }
+
+    public static function ensurePowerIsNormalized(int $newPower): void
+    {
+        $validNormalizedPowers = [
+            1150,
+            1725,
+            2300,
+            3450,
+            4600,
+            5750,
+            6900,
+            8050,
+            9200
+        ];
+
+        if (!in_array($newPower, $validNormalizedPowers)) {
+            throw new InvalidPower($newPower);
+        }
     }
 
     public function changePower(int $selectedPower): void

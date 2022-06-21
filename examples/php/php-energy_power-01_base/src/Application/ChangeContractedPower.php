@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace CodelyTv\Application;
 
+use CodelyTv\Domain\Contract;
 use CodelyTv\Domain\ContractNotFound;
 use CodelyTv\Domain\ContractRepository;
-use CodelyTv\Domain\InvalidPower;
 
 final class ChangeContractedPower
 {
@@ -24,21 +24,7 @@ final class ChangeContractedPower
             throw new ContractNotFound($contractId);
         }
 
-        $validNormalizedPowers = [
-            1150,
-            1725,
-            2300,
-            3450,
-            4600,
-            5750,
-            6900,
-            8050,
-            9200
-        ];
-
-        if (!in_array($newPower, $validNormalizedPowers)) {
-            throw new InvalidPower($newPower);
-        }
+        Contract::ensurePowerIsNormalized($newPower);
 
         $contract->changePower($newPower);
 
