@@ -29,20 +29,11 @@ final class OptimizeContractedPower
 
         $optimizedPower = $this->optimizer->optimize();
 
-        $power = $this->getNormalizedPower($optimizedPower);
+        $power = Contract::getNormalizedPower($optimizedPower);
 
         $contract->changePower($power);
 
         $this->repository->save($contract);
     }
 
-    private function getNormalizedPower(int $optimizedPower): int
-    {
-        foreach (Contract::NORMALIZED_POWERS as $NORMALIZED_POWER) {
-            if ($optimizedPower <= $NORMALIZED_POWER) {
-                return $NORMALIZED_POWER;
-            }
-        }
-        return Contract::NORMALIZED_POWERS[array_key_last(Contract::NORMALIZED_POWERS)];
-    }
 }

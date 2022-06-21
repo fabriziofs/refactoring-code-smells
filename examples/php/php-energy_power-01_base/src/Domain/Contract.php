@@ -35,6 +35,16 @@ final class Contract
         }
     }
 
+    public static function getNormalizedPower(int $optimizedPower): int
+    {
+        foreach (self::NORMALIZED_POWERS as $NORMALIZED_POWER) {
+            if ($optimizedPower <= $NORMALIZED_POWER) {
+                return $NORMALIZED_POWER;
+            }
+        }
+        return self::NORMALIZED_POWERS[array_key_last(self::NORMALIZED_POWERS)];
+    }
+
     public function changePower(int $selectedPower): void
     {
         $this->ensurePowerIsNormalized($selectedPower);
