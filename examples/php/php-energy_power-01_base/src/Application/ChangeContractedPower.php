@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace CodelyTv\Application;
 
-use CodelyTv\Domain\Contract;
 use CodelyTv\Domain\ContractNotFound;
 use CodelyTv\Domain\ContractRepository;
 
@@ -23,8 +22,6 @@ final class ChangeContractedPower
         if (!$contract) {
             throw new ContractNotFound($contractId);
         }
-
-        Contract::ensurePowerIsNormalized($newPower);
 
         $contract->changePower($newPower);
 

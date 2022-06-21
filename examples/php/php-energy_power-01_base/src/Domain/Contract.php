@@ -11,11 +11,13 @@ final class Contract
 
     public function __construct(string $id, int $contractedPower)
     {
+        $this->ensurePowerIsNormalized($contractedPower);
+
         $this->id              = $id;
         $this->contractedPower = $contractedPower;
     }
 
-    public static function ensurePowerIsNormalized(int $newPower): void
+    private function ensurePowerIsNormalized(int $newPower): void
     {
         $validNormalizedPowers = [
             1150,
@@ -36,6 +38,8 @@ final class Contract
 
     public function changePower(int $selectedPower): void
     {
+        $this->ensurePowerIsNormalized($selectedPower);
+
         $this->contractedPower = $selectedPower;
     }
 

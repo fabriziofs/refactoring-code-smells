@@ -18,8 +18,6 @@ final class SignUp
 
     public function run(string $contractId, int $power): void
     {
-        Contract::ensurePowerIsNormalized($power);
-
         $contract = new Contract($contractId, $power);
 
         $this->repository->save($contract);
