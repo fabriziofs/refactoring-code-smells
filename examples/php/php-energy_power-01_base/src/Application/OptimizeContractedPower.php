@@ -11,12 +11,12 @@ use CodelyTv\Domain\PowerOptimizer;
 final class OptimizeContractedPower
 {
     private ContractRepository $repository;
-    private PowerOptimizer $optimizer;
+    private PowerOptimizer     $optimizer;
 
     public function __construct(ContractRepository $repository, PowerOptimizer $optimizer)
     {
         $this->repository = $repository;
-        $this->optimizer = $optimizer;
+        $this->optimizer  = $optimizer;
     }
 
     public function run(string $contractId): void
@@ -28,6 +28,15 @@ final class OptimizeContractedPower
 
         $optimizedPower = $this->optimizer->optimize();
 
+        $power = $this->getNormalizedPower($optimizedPower);
+
+        $contract->changePower($power);
+
+        $this->repository->save($contract);
+    }
+
+    private function getNormalizedPower(int $optimizedPower): int
+    {
         if ($optimizedPower <= 1150) {
             $power = 1150;
         } elseif ($optimizedPower <= 1725) {
@@ -47,9 +56,6 @@ final class OptimizeContractedPower
         } else {
             $power = 9200;
         }
-
-        $contract->changePower($power);
-
-        $this->repository->save($contract);
+        return $power;
     }
 }
