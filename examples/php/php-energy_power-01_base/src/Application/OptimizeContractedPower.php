@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace CodelyTv\Application;
 
-use CodelyTv\Domain\Contract;
 use CodelyTv\Domain\ContractNotFound;
 use CodelyTv\Domain\ContractRepository;
 use CodelyTv\Domain\PowerOptimizer;
@@ -29,11 +28,10 @@ final class OptimizeContractedPower
 
         $optimizedPower = $this->optimizer->optimize();
 
-        $power = Contract::getNormalizedPower($optimizedPower);
+        $power = $contract->getNormalizedPower($optimizedPower);
 
         $contract->changePower($power);
 
         $this->repository->save($contract);
     }
-
 }

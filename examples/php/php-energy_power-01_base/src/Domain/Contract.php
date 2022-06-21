@@ -6,7 +6,7 @@ namespace CodelyTv\Domain;
 
 final class Contract
 {
-    public const NORMALIZED_POWERS = [
+    private const NORMALIZED_POWERS = [
         1150,
         1725,
         2300,
@@ -35,7 +35,7 @@ final class Contract
         }
     }
 
-    public static function getNormalizedPower(int $optimizedPower): int
+    public function getNormalizedPower(int $optimizedPower): int
     {
         foreach (self::NORMALIZED_POWERS as $NORMALIZED_POWER) {
             if ($optimizedPower <= $NORMALIZED_POWER) {
